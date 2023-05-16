@@ -134,6 +134,7 @@ class ExInCounter:
         logging.debug(f"Peeking into {bamfile}")
         fin = pysam.AlignmentFile(bamfile)  # type: pysam.AlignmentFile
         cellranger: int = 0
+	rhapsody :int = 0
         dropseq: int = 0
         failed: int = 0
         for i, read in enumerate(fin):
@@ -141,6 +142,8 @@ class ExInCounter:
                 continue
             if read.has_tag("CB") and read.has_tag("UB"):
                 cellranger += 1
+	    elif read.has_tag("CB") and read.has_tag("MA"):
+		rhapsody += 1
             elif read.has_tag("XC") and read.has_tag("XM"):
                 dropseq += 1
             else:
@@ -150,6 +153,9 @@ class ExInCounter:
                 self.cellbarcode_str = "CB"
                 self.umibarcode_str = "UB"
                 break
+	    elif rhapsody > lines:
+		self.cellbarcode_str = "CB"
+                self.umibarcode_str = "MA"
             elif dropseq > lines:
                 self.cellbarcode_str = "XC"
                 self.umibarcode_str = "XM"
