@@ -56,7 +56,7 @@ Then, run the following commands to complete the installation:
 
 ::
 
-    git clone https://github.com/velocyto-team/velocyto.py.git
+    git clone https://github.com/wrb2012/velocyto.py.git
     cd velocyto.py
     pip install -e .  # note the trailing dot
 
